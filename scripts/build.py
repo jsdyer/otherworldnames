@@ -48,8 +48,11 @@ def build(root=ROOT):
         snapshot = stage / "data" / "gazetteer.json.gz"
         with gzip.open(snapshot, "rb") as src, snapshot.with_suffix("").open("wb") as out:
             shutil.copyfileobj(src, out)
-        with gzip.open(snapshot, "rt", encoding="utf-8") as packed:
-            date = json.load(packed)["retrieved"]
+        data = json.loads(snapshot.with_suffix("").read_text(encoding="utf-8"))
+        date = data["retrieved"]
+        bodies = {body: len(part["features"]) for body, part in data["bodies"].items()}
+        status = {"retrieved": date, "features": sum(bodies.values()), "bodies": bodies}
+        (stage / "data-status.json").write_text(json.dumps(status) + "\n", encoding="utf-8")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
             raise ValueError("Invalid snapshot retrieval date")
         (stage / "data-date.svg").write_text(
