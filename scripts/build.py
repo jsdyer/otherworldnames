@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Build a browser tool using Python's standard library; no network required."""
+from datetime import datetime, timezone
+import gzip
 from html import escape
 import json
 from pathlib import Path
@@ -43,6 +45,21 @@ def build(root=ROOT):
     with tempfile.TemporaryDirectory(prefix="coolcode-tool-") as temporary:
         stage = Path(temporary) / "site"
         shutil.copytree(web, stage)
+        snapshot = stage / "data" / "gazetteer.json.gz"
+        with gzip.open(snapshot, "rb") as src, snapshot.with_suffix("").open("wb") as out:
+            shutil.copyfileobj(src, out)
+        with gzip.open(snapshot, "rt", encoding="utf-8") as packed:
+            date = json.load(packed)["retrieved"]
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            raise ValueError("Invalid snapshot retrieval date")
+        (stage / "data-date.svg").write_text(
+            f'<svg xmlns="http://www.w3.org/2000/svg" width="189" height="23" role="img" '
+            f'aria-label="Data retrieved {date}"><title>Data retrieved {date}</title>'
+            f'<rect width="189" height="23" rx="5" fill="#24363a"/>'
+            f'<text x="94.5" y="15.5" fill="#e1f3e9" text-anchor="middle" '
+            f'font-family="system-ui,sans-serif" font-size="12">Data retrieved · {date}</text></svg>',
+            encoding="utf-8")
+        snapshot.unlink()
         index = stage / "index.html"
         page = index.read_text(encoding="utf-8")
         for token, key in {"TITLE": "title", "DESCRIPTION": "description", "TOOL_ID": "id", "SOURCE_URL": "source"}.items():
@@ -50,6 +67,7 @@ def build(root=ROOT):
             if placeholder not in page:
                 raise ValueError(f"Missing template placeholder: {placeholder}")
             page = page.replace(placeholder, escape(tool[key], quote=True))
+        page = page.replace("{{BUILD_DATE}}", datetime.now(timezone.utc).date().isoformat())
         if re.search(r"\{\{[A-Z_]+\}\}", page):
             raise ValueError("Unresolved template placeholder in web/index.html")
         index.write_text(page, encoding="utf-8")

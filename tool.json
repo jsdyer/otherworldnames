@@ -1,12 +1,21 @@
 {
-  "id": "coolcode-tool-template",
-  "title": "CoolCode Tool Starter",
-  "description": "A browser-only example that trims lines and removes exact duplicates.",
-  "category": "security",
-  "tags": ["text", "lines", "duplicates"],
-  "icon": "scan-search",
-  "url": "/coolcode-tool-template/",
-  "source": "https://github.com/jsdyer/coolcode-tool-template",
+  "id": "otherworldnames",
+  "title": "Otherworld Names",
+  "description": "Explore the origins and locations of officially named features on the Moon and Mars.",
+  "category": "field-kit",
+  "tags": [
+    "Moon",
+    "Mars",
+    "planetary names",
+    "USGS",
+    "IAU",
+    "craters",
+    "astronomy",
+    "name origins"
+  ],
+  "icon": "moon-star",
+  "url": "/otherworldnames/",
+  "source": "https://github.com/jsdyer/otherworldnames",
   "hosting": "project",
   "access": "browser"
 }
