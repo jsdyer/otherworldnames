@@ -63,6 +63,16 @@ def build(root=ROOT):
             f'font-family="system-ui,sans-serif" font-size="12">Data retrieved · {date}</text></svg>',
             encoding="utf-8")
         snapshot.unlink()
+        ephemeris = stage / "data/crater-light.json.gz"
+        with gzip.open(ephemeris, "rb") as src:
+            uncompressed = src.read()
+        light = json.loads(uncompressed)
+        evenings = sum(len(site["evenings"]) for site in light["sites"].values())
+        light_status = {"retrieved": light["retrieved"][:10], "retrieved_at": light["retrieved"], "evenings": evenings,
+                        "coverage_start": light["current"][0], "coverage_end": light["current"][1]}
+        (stage / "crater-light-status.json").write_text(json.dumps(light_status) + "\n", encoding="utf-8")
+        ephemeris.with_suffix("").write_bytes(uncompressed)
+        ephemeris.unlink()
         index = stage / "index.html"
         page = index.read_text(encoding="utf-8")
         for token, key in {"TITLE": "title", "DESCRIPTION": "description", "TOOL_ID": "id", "SOURCE_URL": "source"}.items():

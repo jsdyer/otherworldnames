@@ -4,6 +4,16 @@
 
 Explore IAU-approved place names on the Moon and Mars. Start with the Martian crater [Canso](https://coolcode.ca/otherworldnames/#feature=1006), named for a Nova Scotia town. Select mapped feature centres, search names and recorded origins, filter by feature type or the Gazetteer's country/cultural group, and share a direct link to any feature. Lettered lunar craters can be included with the satellite-features switch.
 
+## Crater Light
+
+[Compare Copernicus on March 18 and 19, 2024](https://coolcode.ca/otherworldnames/crater-light/?feature=1296&site=langley&date=2024-03-18). At 21:00 in Langley, the Sun rose from −3.0° at the crater centre on March 18 to +9.0° one evening later, when the Moon stood 62.7° above the local horizon. In Halifax at 21:00 on March 19, the Sun stood 7.0° above the crater and the Moon 67.6° above the observer. Use the next qualifying evening button, change the city or choose a different crater. The atlas can also send any named lunar crater, including lettered satellites, to the planner. [Nightfinder](https://coolcode.ca/nightfinder/) links its Langley and Halifax observing plans to Copernicus.
+
+Crater Light combines USGS/IAU centres with [JPL Horizons](https://ssd.jpl.nasa.gov/horizons/manual.html) observer quantities 4, 14, 15 and 20 for the Moon. The response includes airless topocentric altitude, observer and solar subpoints (MOON_ME, east positive), observer range and a twilight flag. For crater unit vector **n** and subpoint unit vectors **s**, **o**, solar elevation equals asin(**n**·**s**). Local observer elevation equals atan2(**n**·**o** − R/d, sqrt(1 − (**n**·**o**)²)), with R = 1,737.4 km and d the observer distance to lunar centre. This finite-distance test rejects far-side centres and accounts for libration. Terrain and individual shadows are unresolved. A qualifying hourly sample has sunlight (0°, 15°], observer elevation above 0°, Moon altitude at least 20°, and nautical twilight or darker at the city.
+
+Refresh with `python3 scripts/refresh_crater_light.py`. The monthly workflow validates both datasets before publishing. The fixed example covers March 18–31, 2024. Each refresh covers the previous seven days through 120 days ahead, with hourly local samples from 18:00 through 23:00. The archive stores UTC instants and UTC offsets using the IANA America/Vancouver and America/Halifax rules at generation. The methods panel links the actual Horizons query and reports its generation and retrieval times. `crater-light-status.json` publishes the retrieval date, span and count of site-evenings.
+
+Cloud cover is an optional on-demand request to the [ECCC GEM forecast via Open-Meteo](https://open-meteo.com/en/docs/gem-api) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). The preset city coordinates leave the browser only when the visitor checks cloud cover. Forecast hours are matched in UTC and show retrieval time. Historical, missing or unreachable forecasts leave an explicit gap.
+
 ## Data
 
 The [USGS/IAU Gazetteer of Planetary Nomenclature](https://planetarynames.wr.usgs.gov/GIS_Downloads) publishes nightly centre-point KML files. The initial November 18, 2026 snapshot contains 9,087 unique Moon records and 2,054 unique Mars records. The Mars export contained two identical placements of Bohar with the same stable ID. Exact duplicate IDs are collapsed. Conflicting duplicate IDs stop the refresh. Only records marked “Adopted by IAU” are included.
@@ -16,7 +26,7 @@ NASA Solar System Treks supplies the static map backdrops. The lunar atlas uses 
 
 ## Run locally
 
-Python 3 builds the site offline. The build expands the versioned gzip data into a static JSON file and generates a badge from the snapshot retrieval date. It includes no runtime CDN dependencies. Searches and filtering run in the browser. Permalinks store only the official feature ID.
+Python 3 builds the site offline. The build expands the versioned gzip data into a static JSON file and generates a badge from the snapshot retrieval date. It includes no runtime CDN dependencies. Searches and filtering run in the browser. Atlas permalinks store the official feature ID. Planner permalinks also carry the preset city and local date.
 
 ```sh
 node --test tests/*.test.mjs

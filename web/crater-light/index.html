@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#122329"><title>Crater Light · Otherworld Names</title>
+<meta name="description" content="Find evenings when sunlight grazes a named lunar crater and the Moon is high enough to observe from Langley or Halifax.">
+<link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="./style.css"><script type="module" src="./app.mjs"></script>
+</head><body>
+<a class="skip" href="#controls">Skip to planner</a>
+<nav><div class="shell nav-inner"><a class="brand" href="../">Otherworld Names</a><div><a href="https://coolcode.ca/nightfinder/">Nightfinder</a><a href="https://coolcode.ca/">CoolCode.ca</a></div></div></nav>
+<header class="shell mast"><div><p class="overline">Lunar observing planner</p><h1>Crater Light</h1></div><p>At lunar sunrise and sunset, shadows trace crater rims and floors. Find a local evening when the Sun is low at a named crater and the Moon is high in your sky.</p></header>
+<main class="shell">
+<p id="loading" role="status">Opening the Gazetteer and Horizons snapshots…</p>
+<section id="planner" hidden>
+<div class="controls" id="controls">
+<label>Lunar crater <select id="feature"></select></label>
+<label>Observing site <select id="site"></select></label>
+<label>Local evening <input id="date" type="date" required></label>
+</div>
+<div class="actions"><button id="example" type="button">Try Copernicus, March 18–19, 2024</button><button id="today" type="button">Current observing season</button><a id="share" href="./">Permalink</a></div>
+<div class="overview">
+<article class="finding"><p class="overline" id="location"></p><h2 id="headline"></h2><p id="verdict" aria-live="polite"></p><p id="next"></p></article>
+<aside class="locator"><div class="surface"><img src="../maps/moon.jpg" alt="Global lunar surface mosaic, centred on the near side"><span id="marker" aria-hidden="true"></span></div><p id="coordinates"></p><a id="gazetteer" href="../">Open crater in surface atlas</a></aside>
+</div>
+<section class="night" aria-labelledby="night-heading"><h2 id="night-heading">The evening, hour by hour</h2><p id="clock"></p>
+<div class="scroll" role="region" tabindex="0" aria-label="Hourly crater lighting and sky conditions">
+<table><thead><tr><th scope="col">Local time</th><th scope="col">Sun at crater</th><th scope="col">Moon in sky</th><th scope="col">Earth at crater</th><th scope="col">Local sky</th><th scope="col">Observing condition</th><th scope="col">Cloud cover</th></tr></thead><tbody id="hours"></tbody></table></div>
+<p id="weather-note"></p><button id="weather" type="button" hidden>Check hourly cloud forecast</button>
+</section></section>
+<section class="sources"><div><p class="overline">Methods and sources</p><h2>Reading the angles</h2></div><div>
+<p>A low-angle window requires the Sun above 0° and at or below 15° at the crater centre, the Moon at least 20° above the observing site’s horizon, and nautical twilight or darker. Earth must be above the crater’s horizon. Hourly samples run from 18:00 to 23:00 local time. The times listed are individual samples.</p>
+<p>JPL Horizons gives the Moon’s topocentric altitude, subsolar and sub-observer coordinates, observer distance and twilight state. We project the USGS crater centre onto a spherical Moon, treating the Sun as distant and correcting the Earth sightline for observer distance. Libration can bring some limb features into view. A positive Earth angle near zero means a foreshortened view. Local mountains and individual shadow lengths are outside this model.</p>
+<p id="coverage"></p><p id="source-times"></p>
+<ul><li><a id="source-query" href="https://ssd.jpl.nasa.gov/horizons/">JPL observer ephemeris</a> · <a href="https://ssd.jpl.nasa.gov/horizons/manual.html">Horizons manual</a></li>
+<li><a id="usgs" href="https://planetarynames.wr.usgs.gov/">Official USGS/IAU crater record</a> · <a href="https://trek.nasa.gov/moon/">NASA Moon Trek surface mosaic</a></li>
+<li><a href="https://open-meteo.com/en/docs/gem-api">ECCC GEM cloud forecast via Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li></ul>
+<p>Selections stay in your browser. Checking the optional forecast sends the preset city coordinates to Open-Meteo. Permalinks include the Gazetteer ID, preset city and calendar date.</p>
+</div></section></main><footer class="shell"><a href="../">Otherworld Names</a><a href="https://github.com/jsdyer/otherworldnames">Source code</a></footer></body></html>
