@@ -62,3 +62,16 @@ export function namingTheme(body, code) {
   if (['ME','LC','PA','SI','OC'].includes(code)) return 'These lunar plains and bays draw on Latin terms for weather or abstract concepts.';
   return themes[code] || 'The Gazetteer groups proposed names by body and landform. Its categories describe naming practices and historical exceptions.';
 }
+
+export function sharedNames(worlds) {
+  const names = new Map();
+  for (const [body, features] of Object.entries(worlds)) {
+    for (const feature of features) {
+      if (feature.code === 'SF') continue;
+      if (!names.has(feature.name)) names.set(feature.name, {Moon: [], Mars: []});
+      names.get(feature.name)[body].push(feature);
+    }
+  }
+  return new Map([...names].filter(([, pair]) => pair.Moon.length && pair.Mars.length)
+    .sort(([first], [second]) => first.localeCompare(second, 'en')));
+}
