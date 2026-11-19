@@ -1,7 +1,7 @@
 {
   "id": "otherworldnames",
   "title": "Otherworld Names",
-  "description": "Explore the origins and locations of officially named features on the Moon and Mars.",
+  "description": "Explore named features on the Moon and Mars, and find low-angle sunlight at lunar craters from Langley or Halifax.",
   "category": "field-kit",
   "tags": [
     "Moon",
@@ -11,7 +11,9 @@
     "IAU",
     "craters",
     "astronomy",
-    "name origins"
+    "name origins",
+    "JPL Horizons",
+    "lunar observing"
   ],
   "icon": "moon-star",
   "url": "/otherworldnames/",

@@ -52,6 +52,32 @@ def main():
                 page.set_viewport_size({"width": 390, "height": 844})
                 assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
                 page.screenshot(path=str(screenshots / "mobile.png"), full_page=True)
+                page.goto(f"http://127.0.0.1:{server.server_port}/example-tool/crater-light/?feature=1296&site=langley&date=2024-03-18")
+                page.wait_for_selector("#planner:visible")
+                assert page.locator("#headline").inner_text() == "Copernicus"
+                assert "crater in darkness" in page.locator("#verdict").inner_text()
+                page.locator("#next button").click()
+                assert page.locator("#date").input_value() == "2024-03-19"
+                assert page.locator("#hours tr.window").count() == 4
+                assert "62.7°" in page.locator("#hours tr").nth(3).inner_text()
+                page.locator("#site").select_option("halifax")
+                assert "67.6°" in page.locator("#hours tr").nth(3).inner_text()
+                assert "UTC−03:00" in page.locator("#clock").inner_text()
+                page.reload()
+                page.wait_for_selector("#planner:visible")
+                assert page.locator("#site").input_value() == "halifax"
+                assert page.locator("#date").input_value() == "2024-03-19"
+                assert page.locator("#weather").is_hidden()
+                page.screenshot(path=str(screenshots / "crater-light-mobile.png"), full_page=True)
+                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+                page.locator("#feature").select_option("6108")
+                assert "beyond the lunar limb" in page.locator("#verdict").inner_text()
+                page.locator("#gazetteer").click()
+                page.wait_for_selector("#workbench:visible")
+                assert page.locator("#detail-name").inner_text() == "Tsiolkovskiy"
+                page.locator("#light-link").click()
+                page.wait_for_selector("#planner:visible")
+                assert page.locator("#feature").input_value() == "6108"
                 assert not errors, errors
                 browser.close()
             print("Browser checks passed: records, filters, permalinks, pagination and mobile layout")

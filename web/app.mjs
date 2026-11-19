@@ -93,6 +93,8 @@ function showDetail() {
   field('theme',namingTheme(body,feature.code));
   byId('source-link').href = 'https://planetarynames.wr.usgs.gov/Feature/'+feature.id;
   byId('permalink').href = permalink(feature.id);
+  byId('light-link').hidden = body !== 'Moon' || !['AA','SF'].includes(feature.code);
+  byId('light-link').href = './crater-light/?feature=' + feature.id;
 }
 
 function renderTable() {
