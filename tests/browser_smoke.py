@@ -33,6 +33,10 @@ def main():
                 assert page.locator("#detail-name").inner_text() == "Canso"
                 assert "Nova Scotia" in page.locator("#origin").inner_text()
                 assert page.locator("#source-link").get_attribute("href").endswith("/Feature/1006")
+                assert "Panama" in page.locator("#shared-records").inner_text()
+                page.locator("#shared-name").select_option("Copernicus")
+                page.get_by_role("link", name="Locate on Moon").click()
+                assert page.locator("#source-link").get_attribute("href").endswith("/Feature/1296")
                 page.locator("#query").fill("nowherezzzz")
                 assert "0 matching" in page.locator("#matches").inner_text()
                 page.locator('[data-example="3691"]').click()

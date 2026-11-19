@@ -7,15 +7,15 @@
 <script type="module" src="./app.mjs"></script></head>
 <body><a class="skip" href="#explore">Skip to explorer</a>
 <nav><div class="shell nav-inner"><a class="brand" href="https://coolcode.ca/">CoolCode<span>.ca</span></a><div><a href="./crater-light/">Crater Light</a><a href="#sources">Sources</a><a href="{{SOURCE_URL}}">GitHub ↗</a></div></div></nav>
-<header class="shell mast"><div><p class="overline">Planetary gazetteer</p><h1>Otherworld Names</h1></div><p>Explore the names people have given to the Moon and Mars. Follow a crater back to a town on Earth, an astronomer, or a word in another language.</p></header>
+<header class="shell mast"><div><p class="overline">Planetary gazetteer</p><h1>Otherworld Names</h1></div><p>Where do names on the Moon and Mars come from? Trace a crater back to a Canadian town, or compare two features called Balboa. One commemorates an explorer and the other a place in Panama.</p></header>
 <main class="shell" id="explore">
 <div id="load-status" role="status">Opening the Gazetteer snapshot…</div>
 <section id="workbench" hidden aria-label="Planetary feature explorer">
 <div class="toolbar"><fieldset id="body-choice"><legend>Choose a world</legend>
 <label><input type="radio" name="body" value="Mars" checked><span>Mars</span></label>
 <label><input type="radio" name="body" value="Moon"><span>Moon</span></label>
-</fieldset><div class="examples"><span>Jump to</span><button data-example="1006">Canso</button><button data-example="3691">Sea of Tranquility</button><button data-example="14300">Jezero</button></div></div>
-<div class="workspace">
+</fieldset><div class="examples"><span>Jump to</span><button data-example="1006">Canso</button><button data-example="3691">Sea of Tranquility</button><button data-example="14300">Jezero</button><a href="#namesakes">Shared names ↓</a></div></div>
+<div class="workspace" id="atlas">
 <section class="atlas"><div class="card-head"><h2 id="map-heading">Surface atlas</h2><span id="map-count" class="mono"></span></div>
 <div class="map-frame"><canvas id="map" aria-label="Map of matching feature centres. Select a name in the accessible list below to locate it on the map."></canvas></div>
 <div class="longitudes" aria-hidden="true"><span>180° W</span><span>90° W</span><span>0°</span><span>90° E</span><span>180° E</span></div>
@@ -27,6 +27,12 @@
 <details id="theme-panel"><summary>Naming theme</summary><p id="theme"></p><a href="https://planetarynames.wr.usgs.gov/Page/Categories">IAU naming categories ↗</a></details>
 <div id="detail-actions"><a class="source-link" id="source-link" href="https://planetarynames.wr.usgs.gov/">Original record ↗</a><a id="permalink" href="#explore">Permalink</a><a id="light-link" href="./crater-light/" hidden>Plan crater light</a></div>
 </article></div>
+<section class="namesakes" id="namesakes" aria-labelledby="shared-heading">
+<h2 id="shared-heading">One name, two worlds</h2>
+<p id="shared-count"></p>
+<label>Shared name <select id="shared-name"></select></label>
+<div class="pair" id="shared-records" aria-live="polite"></div>
+</section>
 <section class="directory" aria-labelledby="search-head">
 <div class="directory-title"><h2 id="search-head">Find a name</h2><button id="reset">Clear filters</button></div>
 <div class="filters">

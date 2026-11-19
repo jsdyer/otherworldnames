@@ -4,6 +4,10 @@
 
 Explore IAU-approved place names on the Moon and Mars. Start with the Martian crater [Canso](https://coolcode.ca/otherworldnames/#feature=1006), named for a Nova Scotia town. Select mapped feature centres, search names and recorded origins, filter by feature type or the Gazetteer's country/cultural group, and share a direct link to any feature. Lettered lunar craters can be included with the satellite-features switch.
 
+<!-- coolcode:guide -->
+Open One name, two worlds and compare Balboa. The lunar crater honours Vasco Nuñez de Balboa, while its Martian namesake takes its name from a town in Panama. Try Copernicus or Adams, then locate either feature in the atlas. The November edition has 134 shared spellings after excluding lettered satellite features.
+<!-- /coolcode:guide -->
+
 ## Crater Light
 
 [Compare Copernicus on March 18 and 19, 2024](https://coolcode.ca/otherworldnames/crater-light/?feature=1296&site=langley&date=2024-03-18). At 21:00 in Langley, the Sun rose from −3.0° at the crater centre on March 18 to +9.0° one evening later, when the Moon stood 62.7° above the local horizon. In Halifax at 21:00 on March 19, the Sun stood 7.0° above the crater and the Moon 67.6° above the observer. Use the next qualifying evening button, change the city or choose a different crater. The atlas can also send any named lunar crater, including lettered satellites, to the planner. [Nightfinder](https://coolcode.ca/nightfinder/) links its Langley and Halifax observing plans to Copernicus.

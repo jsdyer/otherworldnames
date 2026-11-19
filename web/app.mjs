@@ -1,4 +1,4 @@
-import {PAGE_SIZE, START, coordinate, indexFeatures, matching, namingTheme, nearest, project} from './model.mjs';
+import {PAGE_SIZE, START, sharedNames, coordinate, indexFeatures, matching, namingTheme, nearest, project} from './model.mjs';
 
 const byId = id => document.getElementById(id);
 const base = location.pathname + location.search;
@@ -158,6 +158,46 @@ function ensureDetailsVisible() {
   if (rect.bottom < 0 || rect.top > innerHeight) byId('detail-name').scrollIntoView({block:'start'});
 }
 
+function setupSharedNames() {
+  const names = sharedNames(worlds);
+  const select = byId('shared-name');
+  select.replaceChildren(...[...names.keys()].map(name => new Option(name, name)));
+  if (names.has('Balboa')) select.value = 'Balboa';
+  field('shared-count', format(names.size) + ' names have the same spelling on both worlds, excluding lettered satellite features. Read both origin records to see what each name commemorates.');
+  function showPair() {
+    const pair = names.get(select.value);
+    const cards = [];
+    for (const [world, features] of Object.entries(pair || {})) {
+      for (const feature of features) {
+        const card = document.createElement('article');
+        const heading = document.createElement('h3');
+        heading.textContent = world + ' · ' + feature.name;
+        const origin = document.createElement('p');
+        origin.textContent = feature.origin || 'Unreported origin';
+        const fact = document.createElement('p');
+        fact.className = 'mono';
+        fact.textContent = [feature.type, feature.km ? format(Math.round(feature.km * 10) / 10) + ' km' : null,
+          feature.year ? 'Approved ' + feature.year : null].filter(Boolean).join(' · ');
+        const link = document.createElement('a');
+        link.href = permalink(feature.id);
+        link.textContent = 'Locate on ' + world;
+        link.onclick = event => {
+          if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          jump(feature.id);
+          byId('detail-name').tabIndex = -1;
+          byId('detail-name').focus();
+        };
+        card.append(heading, origin, fact, link);
+        cards.push(card);
+      }
+    }
+    byId('shared-records').replaceChildren(...cards);
+  }
+  select.onchange = showPair;
+  showPair();
+}
+
 async function start() {
   const response=await fetch('./data/gazetteer.json');
   if (!response.ok) throw new Error('Snapshot unavailable');
@@ -167,6 +207,7 @@ async function start() {
     for (const feature of worlds[name]) allRecords.set(feature.id,{body:name,feature});
     const image=new Image();images[name]=image;image.onload=draw;image.src='./maps/'+name.toLowerCase()+'.jpg';
   }
+  setupSharedNames();
   field('dates','Source exports: Moon '+data.bodies.Moon.generated+' · Mars '+data.bodies.Mars.generated+'. Retrieved '+data.retrieved+' UTC. '+siteDate);
   byId('load-status').hidden=true;byId('workbench').hidden=false;
   const id=new URLSearchParams(location.hash.slice(1)).get('feature');
