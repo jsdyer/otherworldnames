@@ -40,6 +40,14 @@ class BuildTests(unittest.TestCase):
         data = json.loads((output / "data/gazetteer.json").read_text())
         self.assertEqual(status["retrieved"], data["retrieved"])
         self.assertEqual(status["features"], sum(len(body["features"]) for body in data["bodies"].values()))
+        light = json.loads((output / "data/crater-light.json").read_text())
+        light_status = json.loads((output / "crater-light-status.json").read_text())
+        self.assertEqual(light_status["retrieved_at"], light["retrieved"])
+        self.assertEqual(light_status["evenings"], sum(len(site["evenings"]) for site in light["sites"].values()))
+        for probe in metadata(self.root)["data_info"]["probes"]:
+            source = json.loads((output / probe["url"].rsplit("/", 1)[1]).read_text())
+            self.assertTrue(source[probe["path"][0]])
+            self.assertGreater(source[probe["count_at"]["path"][0]], 0)
 
     def test_url_matches_tool_id(self):
         self.edit(url="/different/")

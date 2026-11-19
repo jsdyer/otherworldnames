@@ -19,5 +19,38 @@
   "url": "/otherworldnames/",
   "source": "https://github.com/jsdyer/otherworldnames",
   "hosting": "project",
-  "access": "browser"
+  "access": "browser",
+  "data_info": {
+    "mode": "snapshot",
+    "detail": "USGS/IAU feature centres and JPL Horizons ephemerides support the lunar observing planner. Hourly ECCC cloud forecasts are available on demand.",
+    "cadence": "Monthly",
+    "probes": [
+      {
+        "label": "Data retrieved",
+        "url": "https://coolcode.ca/otherworldnames/data-status.json",
+        "path": [
+          "retrieved"
+        ],
+        "count_at": {
+          "path": [
+            "features"
+          ],
+          "unit": "named features"
+        }
+      },
+      {
+        "label": "Horizons retrieved",
+        "url": "https://coolcode.ca/otherworldnames/crater-light-status.json",
+        "path": [
+          "retrieved"
+        ],
+        "count_at": {
+          "path": [
+            "evenings"
+          ],
+          "unit": "site-evenings"
+        }
+      }
+    ]
+  }
 }
