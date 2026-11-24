@@ -46,3 +46,11 @@ For the Chromium checks, install the packages in `tests/browser-requirements.txt
 `python3 scripts/refresh.py` downloads both official current KMZs and validates identities, geometry and coverage before replacing the compressed snapshot. USGS export dates, the UTC retrieval date, and the site build date appear separately in the app.
 
 The **Refresh planetary names** workflow runs monthly and can also be started in Actions. It validates the download, commits it, and dispatches the normal browser-check and Pages deployment workflow. A failing build leaves the last Pages release serving. The regular workflow publishes successful builds on main at the project subpath. GitHub Pages should use **GitHub Actions** as its source.
+
+<!-- schedule-reliability -->
+## Schedule reliability
+
+Public GitHub repositories can have scheduled workflows disabled after 60 days of inactivity. A separate weekly [schedule guard](.github/workflows/schedule-guard.yml) calls GitHub's enable-workflow API for an explicit list of refresh workflows and itself. It can restore workflows disabled for inactivity, preserves manually disabled workflows, and runs independently of collection failures.
+
+This is an interim mitigation, not a scheduling guarantee: GitHub does not document active-workflow renewal as a permanent exemption, and scheduled runs can be delayed or dropped. A scheduler on our own Linux server is the planned independent trigger. The guard does not collect data, create dummy commits, or change source/check timestamps; successful collection and published data freshness still need monitoring.
+<!-- /schedule-reliability -->
