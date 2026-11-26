@@ -1,14 +1,18 @@
 <!doctype html>
-<html lang="en"><head>
+<html lang="en-CA"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#122329"><title>Crater Light · Otherworld Names</title>
+<meta name="theme-color" content="#122329"><title>Lunar Crater Observing Planner for Langley and Halifax · CoolCode</title>
 <meta name="description" content="Find evenings when sunlight grazes a named lunar crater and the Moon is high enough to observe from Langley or Halifax.">
+<link rel="canonical" href="https://coolcode.ca/otherworldnames/crater-light/">
+<meta property="og:title" content="Lunar Crater Observing Planner for Langley and Halifax">
+<meta property="og:description" content="Choose a crater and city to find low-angle sunlight, Moon altitude and the next qualifying observing evening.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://coolcode.ca/otherworldnames/crater-light/">
 <link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="./style.css"><script type="module" src="./app.mjs"></script>
 <script defer src="/assets/tool-metrics.js" referrerpolicy="no-referrer"></script>
-</head><body>
+</head><body data-tool-id="otherworldnames">
 <a class="skip" href="#controls">Skip to planner</a>
 <nav><div class="shell nav-inner"><a class="brand" href="../">Otherworld Names</a><div><a href="https://coolcode.ca/nightfinder/">Nightfinder</a><a href="https://coolcode.ca/">CoolCode.ca</a></div></div></nav>
-<header class="shell mast"><div><p class="overline">Lunar observing planner</p><h1>Crater Light</h1></div><p>At lunar sunrise and sunset, shadows trace crater rims and floors. Find a local evening when the Sun is low at a named crater and the Moon is high in your sky.</p></header>
+<header class="shell mast"><div><p class="overline">Crater Light · Otherworld Names</p><h1>Lunar crater observing planner</h1></div><p>Choose a crater and your observing site to see when shadows will define its rim. The planner opens on Copernicus in Langley. <a href="./?feature=1296&amp;site=halifax&amp;date=2024-03-19">See a favourable evening from Halifax</a>.</p></header>
 <main class="shell">
 <p id="loading" role="status">Opening the Gazetteer and Horizons snapshots…</p>
 <section id="planner" hidden>
@@ -17,7 +21,7 @@
 <label>Observing site <select id="site"></select></label>
 <label>Local evening <input id="date" type="date" required></label>
 </div>
-<div class="actions"><button id="example" type="button">Try Copernicus, March 18–19, 2024</button><button id="today" type="button">Current observing season</button><a id="share" href="./">Permalink</a></div>
+<div class="actions"><button id="example" type="button">Try Copernicus, March 18–19, 2024</button><button id="today" type="button">Show tonight</button><a id="share" href="./">Permalink</a></div>
 <div class="overview">
 <article class="finding"><p class="overline" id="location"></p><h2 id="headline"></h2><p id="verdict" aria-live="polite"></p><p id="next"></p></article>
 <aside class="locator"><div class="surface"><img src="../maps/moon.jpg" alt="Global lunar surface mosaic, centred on the near side"><span id="marker" aria-hidden="true"></span></div><p id="coordinates"></p><a id="gazetteer" href="../">Open crater in surface atlas</a></aside>

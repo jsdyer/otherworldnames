@@ -58,6 +58,9 @@ def main():
                 page.screenshot(path=str(screenshots / "mobile.png"), full_page=True)
                 page.goto(f"http://127.0.0.1:{server.server_port}/example-tool/crater-light/?feature=1296&site=langley&date=2024-03-18")
                 page.wait_for_selector("#planner:visible")
+                assert page.locator('link[rel="canonical"]').get_attribute('href') == 'https://coolcode.ca/otherworldnames/crater-light/'
+                assert page.get_by_role("heading", name="Lunar crater observing planner").count() == 1
+                assert page.locator("body").get_attribute("data-tool-id") == "otherworldnames"
                 assert page.locator("#headline").inner_text() == "Copernicus"
                 assert "crater in darkness" in page.locator("#verdict").inner_text()
                 page.locator("#next button").click()
